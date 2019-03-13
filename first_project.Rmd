@@ -1,0 +1,123 @@
+---
+title: "First Project. Reproducible research"
+author: "Ksenia Ershova"
+date: "3/12/2019"
+output: html_document
+---
+
+### Code for reading in the dataset and/or processing the data
+```{r}
+df <- read.csv(file="activity.csv", header=TRUE, sep=",")
+library(tidyr)
+df$steps <- factor(df$steps)
+df_wide <- spread(df, date, steps)
+```
+
+### Calculate statistics
+```{r}
+# Calculate the total number of steps taken per day
+steps_per_day <- colSums(sapply(df_wide, as.numeric))
+steps_per_day
+
+# Mean and median number of steps taken each day
+summary(steps_per_day)
+
+```
+
+### Histogram of the total number of steps taken each day
+```{r}
+hist(steps_per_day, 
+     main="Steps per day", 
+     xlab="steps", 
+     border="blue",
+     xlim = c(1, 50000),
+     las=1, 
+     breaks=200)
+
+# and to show outliers:
+hist(steps_per_day, 
+     main="Steps per day with outliers", 
+     xlab="steps", 
+     border="blue",
+     las=1, 
+     breaks=400)
+
+```
+
+### Time intervals statistics
+```{r}
+# Calculate average number of steps per each interval across all days
+avg <- rowMeans(sapply(df_wide[2:62], as.numeric), na.rm = TRUE)
+
+# Rename avg vector
+names(avg) <- df_wide$interval
+
+# The 5-minute interval that, on average, contains the maximum number of steps
+avg[which.max(avg)]
+```
+
+### Time series plot
+```{r}
+plot.ts(avg, xlab = "5 min interval", ylab = "average number of steps")
+
+```
+
+### Imputing missing values
+```{r}
+# Calculate and report the total number of missing values in the dataset 
+sum(is.na(df$steps))
+
+# Replace missing values by Weighted Moving Average (from imputeTS package)
+library(imputeTS)
+a <- na.ma(as.numeric(df$steps))
+
+# Create new dataset with replaced values
+df$steps <- a
+df$steps <- factor(df$steps)
+df_wide_noNA <- spread(df, date, steps)
+
+# Calculate the total number of steps taken per day -- No NAs
+steps_per_day_noNA <- colSums(sapply(df_wide_noNA, as.numeric))
+steps_per_day_noNA
+
+# Mean and median number of steps taken each day --No NAs
+summary(steps_per_day_noNA)
+```
+
+### Repeat the histogram without missing values
+```{r}
+
+hist(steps_per_day_noNA, 
+     main="Steps per day", 
+     xlab="steps",
+     xlim = c(1, 50000),
+     border="blue",
+     las=1, 
+     breaks=200)
+```
+
+#### Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
+
+We can see that new mean and median have decreased as compared with the first part. Imputing missing data makes the total daily number of steps go down.
+
+### Are there differences in activity patterns between weekdays and weekends?
+```{r}
+# Find weekdays vs weekends in dates
+library(timeDate)
+w <-isWeekday(df$date, wday=1:5)
+
+# Check the number of weekdays (TRUE) and weekends (FALSE) in dataset
+table(w)
+
+# Make new wide dataframe
+df$w <-w
+df_wide_w <- spread(df, date, steps)
+avg_w <- rowMeans(sapply(df_wide_w[3:63], as.numeric), na.rm = TRUE)
+```
+
+### Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends
+```{r}
+plot(as.factor(df_wide_w$w), avg_w, xlab = "weekends (FALSE) vs weekdays (TRUE)", ylab = "average number of steps")
+```
+
+
