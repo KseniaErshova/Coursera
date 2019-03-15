@@ -60,7 +60,7 @@ summary(steps_per_day)[3]
 ```
 
 ```r
-# Median number of steps taken each day
+# Mean number of steps taken each day
 summary(steps_per_day)[4]
 ```
 
@@ -84,7 +84,7 @@ hist(steps_per_day,
 ![](first_project_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
 ```r
-# and to show outliers:
+# Show outliers:
 hist(steps_per_day, 
      main="Steps per day with outliers", 
      xlab="steps", 
@@ -183,7 +183,7 @@ summary(steps_per_day_noNA)[3]
 ```
 
 ```r
-# Median number of steps taken each day
+# Mean number of steps taken each day
 summary(steps_per_day_noNA)[4]
 ```
 
