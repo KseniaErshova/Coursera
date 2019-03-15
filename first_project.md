@@ -50,13 +50,23 @@ steps_per_day
 ```
 
 ```r
-# Mean and median number of steps taken each day
-summary(steps_per_day)
+# Median number of steps taken each day
+summary(steps_per_day)[3]
 ```
 
 ```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-##     329    8773   10390   16314   12392  339120       8
+##  Median 
+## 10389.5
+```
+
+```r
+# Median number of steps taken each day
+summary(steps_per_day)[4]
+```
+
+```
+##     Mean 
+## 16313.69
 ```
 
 ### Histogram of the total number of steps taken each day
@@ -163,13 +173,23 @@ steps_per_day_noNA
 ```
 
 ```r
-# Mean and median number of steps taken each day --No NAs
-summary(steps_per_day_noNA)
+# Median number of steps taken each day
+summary(steps_per_day_noNA)[3]
 ```
 
 ```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##     288    6912    9906   14246   12123  339120
+## Median 
+## 9905.5
+```
+
+```r
+# Median number of steps taken each day
+summary(steps_per_day_noNA)[4]
+```
+
+```
+##     Mean 
+## 14245.85
 ```
 
 ### Repeat the histogram without missing values
@@ -221,5 +241,6 @@ plot(as.factor(df_wide_w$w), avg_w, xlab = "weekends (FALSE) vs weekdays (TRUE)"
 ```
 
 ![](first_project_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+
 
 

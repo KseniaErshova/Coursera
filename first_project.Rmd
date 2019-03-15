@@ -2,7 +2,9 @@
 title: "First Project. Reproducible research"
 author: "Ksenia Ershova"
 date: "3/12/2019"
-output: html_document
+output:
+   html_document:
+     keep_md: TRUE
 ---
 
 ### Code for reading in the dataset and/or processing the data
@@ -19,9 +21,11 @@ df_wide <- spread(df, date, steps)
 steps_per_day <- colSums(sapply(df_wide, as.numeric))
 steps_per_day
 
-# Mean and median number of steps taken each day
-summary(steps_per_day)
+# Median number of steps taken each day
+summary(steps_per_day)[3]
 
+# Median number of steps taken each day
+summary(steps_per_day)[4]
 ```
 
 ### Histogram of the total number of steps taken each day
@@ -80,8 +84,11 @@ df_wide_noNA <- spread(df, date, steps)
 steps_per_day_noNA <- colSums(sapply(df_wide_noNA, as.numeric))
 steps_per_day_noNA
 
-# Mean and median number of steps taken each day --No NAs
-summary(steps_per_day_noNA)
+# Median number of steps taken each day
+summary(steps_per_day_noNA)[3]
+
+# Median number of steps taken each day
+summary(steps_per_day_noNA)[4]
 ```
 
 ### Repeat the histogram without missing values
@@ -119,5 +126,6 @@ avg_w <- rowMeans(sapply(df_wide_w[3:63], as.numeric), na.rm = TRUE)
 ```{r}
 plot(as.factor(df_wide_w$w), avg_w, xlab = "weekends (FALSE) vs weekdays (TRUE)", ylab = "average number of steps")
 ```
+
 
 
