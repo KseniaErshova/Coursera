@@ -24,7 +24,7 @@ steps_per_day
 # Median number of steps taken each day
 summary(steps_per_day)[3]
 
-# Median number of steps taken each day
+# Mean number of steps taken each day
 summary(steps_per_day)[4]
 ```
 
@@ -38,7 +38,7 @@ hist(steps_per_day,
      las=1, 
      breaks=200)
 
-# and to show outliers:
+# Show outliers:
 hist(steps_per_day, 
      main="Steps per day with outliers", 
      xlab="steps", 
@@ -87,7 +87,7 @@ steps_per_day_noNA
 # Median number of steps taken each day
 summary(steps_per_day_noNA)[3]
 
-# Median number of steps taken each day
+# Mean number of steps taken each day
 summary(steps_per_day_noNA)[4]
 ```
 
